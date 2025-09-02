@@ -4,83 +4,95 @@
 <meta charset="UTF-8">
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: white; /* arrière-plan blanc */
-        overflow: hidden;
-    }
+/* --- ton CSS existant --- */
 
-    header {
-        background-color: white; /* titre sur fond blanc */
-        color: black; /* texte noir */
-        text-align: center;
-        padding: 15px;
-        font-size: 2em;
-        font-weight: bold;
-    }
+/* Corps de page */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
 
-    .container {
-        display: flex;
-        height: calc(100vh - 70px);
-    }
+/* Conteneur principal */
+.container {
+    display: flex;
+    height: 100vh; /* plein écran */
+}
 
-    /* Partie gauche (2/3) */
-    .menu-section {
-        flex: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: white; /* fond blanc */
-        position: relative;
-        overflow: hidden;
-    }
+/* Partie gauche (2/3) - image fixe */
+.left-section {
+    flex: unset;
+    width: 66.6%; /* 2/3 largeur */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
 
-    .menu-section img {
-        position: absolute;
-        max-width: 150%;
-        max-height: 100%;
-        object-fit: contain;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-	padding-top: 0,5cm; /* décale la vidéo vers le bas */
-    }
+.left-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    left: 0; /* pas de cm → stable */
+}
 
-    .menu-section img.active {
-        opacity: 1;
-    }
+/* Partie droite (1/3) - slider */
+.right-section {
+    flex: unset;
+    width: 33.3%; /* 1/3 largeur */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+}
 
+.right-section img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ou contain selon rendu voulu */
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    left: 0; /* pas de cm ici non plus */
+}
 
-
+.right-section img.active {
+    opacity: 1;
+}
 </style>
+
 </head>
 <body>
 
 <div class="container">
-    <!-- Section menu animé -->
-    <div class="menu-section">
-        <img src="1.png" class="active" alt="Menu 1">
-        <img src="1.png" alt="Menu 2">
+    <!-- Section gauche - image fixe -->
+    <div class="left-section">
+        <img src="1.png" alt="Image principale">
     </div>
 
-    <!-- Section vidéo (1 seule vidéo) -->
-    <div class="video-section">
-        <video autoplay muted playsinline loop>
-            <source src="v1.mp4" type="video/mp4">
-        </video>
+    <!-- Section droite - images qui tournent -->
+    <div class="right-section">
+        <img src="p1.png" class="active" alt="Frame 1">
+        <img src="p2.png" alt="Frame 2">
+		<img src="p3.png" alt="Frame 3">
+        <!-- ajoute autant de frames que tu veux -->
     </div>
 </div>
 
 <script>
-    // --- Animation des images du menu ---
-    let images = document.querySelectorAll(".menu-section img");
-    let index = 0;
+// Animation du slider à droite
+let frames = document.querySelectorAll(".right-section img");
+let indexFrame = 0;
 
-    setInterval(() => {
-        images[index].classList.remove("active");
-        index = (index + 1) % images.length;
-        images[index].classList.add("active");
-    }, 5000); // Change toutes les 5 secondes
+setInterval(() => {
+    frames[indexFrame].classList.remove("active");
+    indexFrame = (indexFrame + 1) % frames.length;
+    frames[indexFrame].classList.add("active");
+}, 8000); // change toutes les 8 secondes
 </script>
 
 </body>
